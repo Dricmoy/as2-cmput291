@@ -5,4 +5,4 @@ Name: Dricmoy Bhattacharjee
 
 CCID: 1755384
 
-Collaborators: names and ccids (or the line "I declare that I did not collaborate with anyone in this assignment")
+Collaborators: I declare that I did not collaborate with anyone on this assignment
