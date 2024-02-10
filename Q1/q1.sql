@@ -1,4 +1,4 @@
-SELECT Members.name, Members.email
-FROM Members
-JOIN Waitlist ON Members.member_id = Waitlist.member_id
-JOIN Borrowings ON Members.member_id = Borrowings.member_id AND Waitlist.book_id = Borrowings.book_id;
+SELECT DISTINCT M.name, M.email
+FROM members M
+JOIN borrowings B ON M.email = B.member
+JOIN waitlists W ON M.email = W.member AND B.book_id = W.book_id;

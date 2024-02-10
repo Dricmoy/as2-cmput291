@@ -1,9 +1,9 @@
-SELECT Borrowings.bid, Members.email
-FROM Borrowings
-JOIN Members ON Borrowings.member_id = Members.member_id
-WHERE Borrowings.end_date - Borrowings.start_date > 14
-  AND Borrowings.book_id NOT IN (
-    SELECT Waitlist.book_id
-    FROM Waitlist
-    WHERE Waitlist.priority >= 5
+SELECT B.bid, M.email AS borrower_email
+FROM borrowings B
+JOIN members M ON B.member = M.email
+WHERE julianday(B.end_date) - julianday(B.start_date) > 14
+  AND B.book_id NOT IN (
+    SELECT W.book_id
+    FROM waitlists W
+    WHERE W.priority >= 5
 );

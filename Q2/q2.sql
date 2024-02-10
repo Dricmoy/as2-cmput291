@@ -1,11 +1,6 @@
-SELECT Borrowings.bid, Members.email, Borrowings.end_date
-FROM Borrowings
-JOIN Members ON Borrowings.member_id = Members.member_id
-JOIN Books ON Borrowings.book_id = Books.book_id
-WHERE Books.author LIKE '%John%' OR Books.author LIKE '%Marry%'
-  AND Books.book_id IN (
-    SELECT Borrowings.book_id
-    FROM Borrowings
-    JOIN Members ON Borrowings.member_id = Members.member_id
-    WHERE Members.faculty = 'CS'
-);
+SELECT B.bid, M.email AS borrower_email, B.end_date
+FROM borrowings B
+JOIN members M ON B.member = M.email
+JOIN books BK ON B.book_id = BK.book_id
+WHERE M.faculty = 'CS'
+  AND (LOWER(BK.author) LIKE '%john%' OR LOWER(BK.author) LIKE '%marry%');
