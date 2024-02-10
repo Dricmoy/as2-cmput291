@@ -3,7 +3,7 @@ SELECT b.book_id, b.title,
        COUNT(r.rid) AS revcnt,
        AVG(r.rating) AS rating,
        AVG(CASE WHEN strftime('%Y', r.rdate) = '2023' THEN r.rating END) AS rating23,
-       COALESCE(borrow_wait_count, 0) AS reqcnt
+       COALESCE(bwc.borrow_wait_count, 0) AS reqcnt
 FROM books b
 LEFT JOIN reviews r ON b.book_id = r.book_id
 LEFT JOIN (
@@ -15,4 +15,4 @@ LEFT JOIN (
     ) AS combined
     GROUP BY book_id
 ) AS bwc ON b.book_id = bwc.book_id
-GROUP BY b.book_id;
+GROUP BY b.book_id, b.title;
