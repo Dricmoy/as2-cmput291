@@ -1,6 +1,6 @@
-SELECT Books.book_id, Books.title, Books.publish_year
-FROM Books
-JOIN Borrowings ON Books.book_id = Borrowings.book_id
-GROUP BY Books.book_id
-ORDER BY COUNT(Borrowings.bid) DESC
+SELECT b.book_id, b.title, b.pyear
+FROM books b
+JOIN borrowings br ON b.book_id = br.book_id
+GROUP BY b.book_id, b.title, b.pyear
+ORDER BY COUNT(br.bid) DESC, b.book_id
 LIMIT 3;

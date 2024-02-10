@@ -1,6 +1,6 @@
-SELECT DISTINCT Members.email
-FROM Members
-JOIN Borrowings ON Members.member_id = Borrowings.member_id
-JOIN book_info ON Borrowings.book_id = book_info.book_id
-WHERE book_info.rating > 3.5
-  AND book_info.reqcnt > (SELECT AVG(reqcnt) FROM book_info);
+SELECT DISTINCT m.email
+FROM members m
+JOIN borrowings br ON m.email = br.member
+JOIN book_info bi ON br.book_id = bi.book_id
+WHERE bi.rating > 3.5
+  AND bi.reqcnt > (SELECT AVG(reqcnt) FROM book_info);

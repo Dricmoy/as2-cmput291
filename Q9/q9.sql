@@ -1,11 +1,18 @@
 CREATE VIEW book_info AS
-SELECT Books.book_id, Books.title,
-       COUNT(Reviews.review_id) AS revcnt,
-       AVG(Reviews.rating) AS rating,
-       AVG(CASE WHEN strftime('%Y', Reviews.review_date) = '2023' THEN Reviews.rating END) AS rating23,
-       COUNT(Borrowings.bid) + COALESCE(Waitlist.wait_count, 0) AS reqcnt
-FROM Books
-LEFT JOIN Reviews ON Books.book_id = Reviews.book_id
-LEFT JOIN Borrowings ON Books.book_id = Borrowings.book_id
-LEFT JOIN Waitlist ON Books.book_id = Waitlist.book_id
-GROUP BY Books.book_id;
+SELECT b.book_id, b.title,
+       COUNT(r.rid) AS revcnt,
+       AVG(r.rating) AS rating,
+       AVG(CASE WHEN strftime('%Y', r.rdate) = '2023' THEN r.rating END) AS rating23,
+       COALESCE(borrow_wait_count, 0) AS reqcnt
+FROM books b
+LEFT JOIN reviews r ON b.book_id = r.book_id
+LEFT JOIN (
+    SELECT book_id, COUNT(bid) + COUNT(wid) AS borrow_wait_count
+    FROM (
+        SELECT book_id, bid, NULL AS wid FROM borrowings
+        UNION ALL
+        SELECT book_id, NULL AS bid, wid FROM waitlists
+    ) AS combined
+    GROUP BY book_id
+) AS bwc ON b.book_id = bwc.book_id
+GROUP BY b.book_id;
