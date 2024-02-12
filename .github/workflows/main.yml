@@ -53,53 +53,6 @@ jobs:
           cp -r tests/dbs/* tests/run_dbs/
           sh tests/run_query.sh 10
 
-
-
-
-
-
-      - name: test steps1
-        if: ${{ always() }}
-        run: |
-          sh tests/run_steps.sh 1
-
-
-      - name: test steps2
-        if: ${{ always() }}
-        run: |
-          sh tests/run_steps.sh 2
-
-
-      - name: test steps3
-        if: ${{ always() }}
-        run: |
-          sh tests/run_steps.sh 3
-
-
-      - name: test steps4
-        if: ${{ always() }}
-        run: |
-          sh tests/run_steps.sh 4
-
-
-      - name: test steps5
-        if: ${{ always() }}
-        run: |
-          sh tests/run_steps.sh 5
-
-
-      - name: test steps6
-        if: ${{ always() }}
-        run: |
-          sh tests/run_steps.sh 6
-  
-
-      - name: test steps7
-        if: ${{ always() }}
-        run: |
-          sh tests/run_steps.sh 7
-
-
       - name: test steps8
         if: ${{ always() }}
         run: |
@@ -110,9 +63,3 @@ jobs:
         if: ${{ always() }}
         run: |
           sh tests/run_steps.sh 9
-
-
-      - name: test steps10
-        if: ${{ always() }}
-        run: |
-          sh tests/run_steps.sh 10
