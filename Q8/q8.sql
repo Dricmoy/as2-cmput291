@@ -1,11 +1,12 @@
 WITH PenaltyStats AS (
     SELECT
-        bid AS member,  -- Replace 'bid' with the correct column name that corresponds to the member identifier in your 'penalties' table
-        COUNT(pid) AS total_penalties,
-        SUM(CASE WHEN paid_amount >= amount THEN 1 ELSE 0 END) AS paid_penalties,
-        SUM(CASE WHEN paid_amount >= amount THEN amount ELSE 0 END) AS total_paid_amount
-    FROM penalties
-    GROUP BY bid  -- Replace 'bid' with the correct column name that corresponds to the member identifier in your 'penalties' table
+        B.member,
+        COUNT(P.pid) AS total_penalties,
+        SUM(CASE WHEN P.paid_amount >= P.amount THEN 1 ELSE 0 END) AS paid_penalties,
+        SUM(CASE WHEN P.paid_amount >= P.amount THEN P.amount ELSE 0 END) AS total_paid_amount
+    FROM borrowings B
+    LEFT JOIN penalties P ON B.bid = P.bid
+    GROUP BY B.member
 )
 
 SELECT
