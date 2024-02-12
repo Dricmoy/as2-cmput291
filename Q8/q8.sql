@@ -10,6 +10,9 @@ WITH PenaltyCounts AS (
     LEFT JOIN penalties p ON b.bid = p.bid
     GROUP BY
         m.email
+    --change made here
+    HAVING
+        COUNT(p.pid) > 0  -- Only include members with at least one penalty
 )
 
 SELECT
