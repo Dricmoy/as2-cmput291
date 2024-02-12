@@ -1,9 +1,13 @@
 SELECT m.email,
-       COUNT(DISTINCT p.pid) AS total_penalties,
-       SUM(CASE WHEN p.paid_amount >= p.amount THEN 1 ELSE 0 END) AS paid_penalties,
-       SUM(CASE WHEN p.paid_amount >= p.amount THEN p.amount ELSE 0 END) AS total_paid_amount
+       COALESCE(total_penalties, 0) AS total_penalties,
+       COALESCE(paid_penalties, 0) AS paid_penalties,
+       COALESCE(total_paid_amount, 0) AS total_paid_amount
 FROM members m
-LEFT JOIN borrowings b ON m.email = b.member
-LEFT JOIN penalties p ON b.bid = p.bid
-GROUP BY m.email
-HAVING total_penalties > 0 OR total_paid_amount = 0;
+LEFT JOIN (
+    SELECT member,
+           COUNT(pid) AS total_penalties,
+           SUM(CASE WHEN paid_amount >= amount THEN 1 ELSE 0 END) AS paid_penalties,
+           SUM(CASE WHEN paid_amount >= amount THEN amount ELSE 0 END) AS total_paid_amount
+    FROM penalties
+    GROUP BY member
+) AS penalty_stats ON m.email = penalty_stats.member;
