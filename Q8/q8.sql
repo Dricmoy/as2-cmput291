@@ -1,4 +1,10 @@
-WITH PenaltyStats AS (
+SELECT
+    M.email,
+    COALESCE(total_penalties, 0) AS total_penalties,
+    COALESCE(paid_penalties, 0) AS paid_penalties,
+    COALESCE(total_paid_amount, 0) AS total_paid_amount
+FROM members M
+LEFT JOIN (
     SELECT
         B.member AS email,
         COUNT(P.pid) AS total_penalties,
@@ -7,13 +13,4 @@ WITH PenaltyStats AS (
     FROM borrowings B
     LEFT JOIN penalties P ON B.bid = P.bid
     GROUP BY B.member
-)
-
-SELECT
-    M.email,
-    COALESCE(PS.total_penalties, 0) AS total_penalties,
-    COALESCE(PS.paid_penalties, 0) AS paid_penalties,
-    COALESCE(PS.total_paid_amount, 0) AS total_paid_amount
-FROM members M
-LEFT JOIN PenaltyStats PS ON M.email = PS.email
-WHERE PS.email IS NOT NULL OR PS.email IS NULL; -- Include users with no paid penalties
+) PS ON M.email = PS.email;
