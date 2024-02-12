@@ -1,8 +1,8 @@
 WITH PenaltyCounts AS (
     SELECT
         m.email,
-        COUNT(p.pid) AS total_penalties,
-        SUM(CASE WHEN p.paid_amount >= p.amount THEN 1 ELSE 0 END) AS paid_penalties,
+        COUNT(DISTINCT p.pid) AS total_penalties,
+        COUNT(DISTINCT CASE WHEN p.paid_amount >= p.amount THEN p.pid END) AS paid_penalties,
         SUM(CASE WHEN p.paid_amount >= p.amount THEN p.paid_amount ELSE 0 END) AS total_paid_amount
     FROM
         members m
@@ -10,9 +10,8 @@ WITH PenaltyCounts AS (
     LEFT JOIN penalties p ON b.bid = p.bid
     GROUP BY
         m.email
-    --change made here
     HAVING
-        COUNT(p.pid) > 0  -- Only include members with at least one penalty
+        COUNT(DISTINCT p.pid) > 0
 )
 
 SELECT
