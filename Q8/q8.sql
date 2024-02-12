@@ -20,4 +20,4 @@ SELECT
     COALESCE(paid_penalties, 0) AS paid_penalties,
     COALESCE(total_paid_amount, 0) AS total_paid_amount
 FROM
-    PenaltyCounts pc;
+    PenaltyCounts;
