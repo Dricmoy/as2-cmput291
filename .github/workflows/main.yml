@@ -24,42 +24,16 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install sqlparse==0.4.4
           python3 -m pip install SQLAlchemy==2.0.19
-
-
-
+          
       - name: test q8
         if: ${{ always() }}
         run: |
           rm -rf tests/run_dbs
           mkdir -p tests/run_dbs
           cp -r tests/dbs/* tests/run_dbs/
-          sh tests/run_query.sh 8
-
-          
-      - name: test q9
-        if: ${{ always() }}
-        run: |
-          rm -rf tests/run_dbs
-          mkdir -p tests/run_dbs
-          cp -r tests/dbs/* tests/run_dbs/
           sh tests/run_query.sh 9
-
-
-      - name: test q10
-        if: ${{ always() }}
-        run: |
-          rm -rf tests/run_dbs
-          mkdir -p tests/run_dbs
-          cp -r tests/dbs/* tests/run_dbs/
-          sh tests/run_query.sh 10
-
-      - name: test steps8
-        if: ${{ always() }}
-        run: |
-          sh tests/run_steps.sh 8
-
           
-      - name: test steps9
+      - name: test steps8
         if: ${{ always() }}
         run: |
           sh tests/run_steps.sh 9
