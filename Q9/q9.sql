@@ -16,3 +16,5 @@ LEFT JOIN
     waitlists w ON b.book_id = w.book_id
 GROUP BY
     b.book_id, b.title;
+
+SELECT * from book_info
