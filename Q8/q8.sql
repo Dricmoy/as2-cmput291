@@ -20,8 +20,4 @@ SELECT
     COALESCE(paid_penalties, 0) AS paid_penalties,
     COALESCE(total_paid_amount, 0) AS total_paid_amount
 FROM
-<<<<<<< HEAD
     PenaltyCounts pc;
-=======
-    PenaltyCounts;
->>>>>>> 7060a45a095663638d959036c5f9ce80a9fa30a3
