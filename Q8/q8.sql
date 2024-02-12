@@ -1,4 +1,4 @@
-WITH PenaltyStats AS (
+WITH PenaltyStats AS PS(
     SELECT
         B.member,
         COUNT(P.pid) AS total_penalties,
