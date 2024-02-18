@@ -1,2 +1,42 @@
-agent: NA
+agent: ChatGPT
 Details:
+
+Prompt:
+Help structure a SQL query to retrieve details about books, including book_id, title, 
+and the average rating from the 'reviews' table. The query should involve a JOIN with the 'books' table, 
+grouping the results by book_id and title, filtering for books with at least two reviews, 
+and ordering the results by average rating in descending order with a limit of 3.
+
+ChatGPT Help:
+Columns: R.book_id, B.title, AVG(R.rating) AS rating
+Grouped by R.book_id and B.title
+Filtered for books with at least two reviews
+Ordered by average rating in descending order
+Limited to 3 results
+
+ChatGPT Help:
+ChatGPT explained the usage of aggregate functions, GROUP BY for grouping results, HAVING for filtering group results,
+and ORDER BY for sorting results. 
+
+My thoughts:
+select book_id, title, and the average rating, 
+grouping by book_id and title, filtering for books with at least two reviews, and 
+ordering the results by average rating in descending order with a limit of 3.
+
+R.book_id (Book ID from reviews table)
+B.title (Book Title)
+AVG(R.rating) AS avg_rating (Average Rating)
+Tables and Joins:
+
+reviews R
+JOIN books B ON R.book_id = B.book_id
+
+Conditions:
+Grouping results by R.book_id and B.title
+Filtering for books with at least two reviews (HAVING COUNT(R.rid) >= 2)
+Ordering:
+
+ORDER BY avg_rating DESC
+Limit:
+
+LIMIT 3

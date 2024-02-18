@@ -1,2 +1,23 @@
-agent: NA
+agent: ChatGPT
 Details:
+
+Thoughts:
+I have a general idea of creating a list of members associated with popular books. 
+Combination of average rating greater than 35 and a request count higher than the average request count means the book is popular.
+
+ChatGPT Help:
+I sought guidance from ChatGPT on how to structure a query that involves filtering for popular books based on average 
+rating and request count. 
+ChatGPT provided insights into the JOIN operation and demonstrated an example similar to my output in Query 1.
+
+My Thoughts:
+With ChatGPT's input, I began by joining the 'members' table with 'borrowings' and the 'book_info' view. 
+I then incorporated the conditions for popularity: a rating greater than 35 and a request count higher than the calculated average request count.
+
+Intermediate Steps:
+1. Joined 'members' with 'borrowings' on member email.
+2. Extended the JOIN to include the 'book_info' view on the book_id.
+3. Incorporated the conditions for popularity: rating > 35 and reqcnt > average request count.
+
+After refining the query, I used my python script to confirm its functionality. Specifically, I verified that the query successfully retrieves a 
+list of members associated with popular books, based on the defined criteria. The JOIN operations and subquery enhance the query's specificity.

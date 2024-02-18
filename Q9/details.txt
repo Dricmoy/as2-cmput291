@@ -1,2 +1,75 @@
-agent: NA
+agent: ChatGpt
 Details:
+
+ChatGPT knows I'm trying to retrieve data from a sqlite database and the query I need 
+can only have subqueries, it can't be more than one single Select statement at the end.
+Prompt:
+I'm aiming to create a view named book_info that consolidates information about books, 
+including book_id, title, review count, average rating, average rating for the year 2023, and the total request count (borrowings and waitlists).
+
+
+ChatGPT generated query:
+CREATE VIEW book_info AS
+SELECT 
+    b.book_id,
+    b.title,
+    COALESCE(r.revcnt, 0) AS revcnt,
+    COALESCE(r.rating, 0) AS rating,
+    COALESCE(r.rating23, 0) AS rating23,
+    COALESCE(bor.reqcnt, 0) AS reqcnt
+FROM 
+    books b
+LEFT JOIN (
+    SELECT 
+        book_id,
+        COUNT(rid) AS revcnt,
+        AVG(rating) AS rating,
+        AVG(CASE WHEN strftime('%Y', rdate) = '2023' THEN rating ELSE NULL END) AS rating23
+    FROM 
+        reviews
+    GROUP BY 
+        book_id
+) r ON b.book_id = r.book_id
+LEFT JOIN (
+    SELECT 
+        book_id,
+        COUNT(bid) AS reqcnt
+    FROM 
+        borrowings
+    GROUP BY 
+        book_id
+    UNION ALL
+    SELECT 
+        book_id,
+        COUNT(wid) AS reqcnt
+    FROM 
+        waitlists
+    GROUP BY 
+        book_id
+) bor ON b.book_id = bor.book_id;
+
+My steps:
+Some elements are completely unnecessary but the details look correct, generated a python script to test the sql output for ease of use for debugging.
+Experimented with different conditions in the AVG(CASE WHEN ...) clause for the rating in the year 2023.
+Afterwards I simplified but fixed the overall structure to ensure it captures the desired information accurately.
+Fine-tuned the use of COALESCE to handle potential NULL values.
+I thought about performance but apparently performance is not an issue for this assignment or so I have been told.
+
+Prompt: 
+Review my final code and tell me what you think it's doing
+
+ChatGPT:
+It looks like you're creating a view named book_info to aggregate information about books, 
+including the count and average rating of reviews, the average rating for the year 2023, and the count of borrowings and waitlists.
+Make sure the aggregations align with your intended logic. It seems like you are calculating 
+the average rating for all reviews and the average rating for the year 2023 separately.
+
+Date Comparison:
+The condition strftime('%Y', r.rdate) = '2023' checks if the year is 2023. 
+Ensure that your date format and comparison are accurate based on your database system.
+
+Naming Conventions:
+Consider using more descriptive names for your aliases, especially if this view is going to be used by others. Clear and meaningful names can enhance the readability of your queries.
+
+My thoughts:
+ChatGPT understands it and didnt really see anything wrong with the code and it passes the Github Actions tests after I add select * from book_info

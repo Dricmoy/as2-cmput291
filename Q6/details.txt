@@ -1,2 +1,33 @@
-agent: NA
+agent: ChatGPT
 Details:
+
+As I ran all my prompts on the same chatgpt dashboard, it already had a strong grasp about the structure 
+of my database.
+
+Prompts for this question summarized:
+The final Query I'm trying to get to should involve a LEFT JOIN with the 'borrowings' table, a LEFT JOIN with the 'waitlists' table, 
+filtering for books published on or before 2015, and considering borrowings with a bid greater than or 
+equal to twice the waitlist priority (if waitlist exists). Group the results by book_id.
+
+With ChatGPT help and my own tweaking, final query structure:
+Columns:
+
+b.book_id (Book ID)
+b.title (Book Title)
+COUNT(br.bid) AS borrow_count (Count of Borrowings)
+Tables and Joins:
+
+books b
+LEFT JOIN borrowings br ON b.book_id = br.book_id
+LEFT JOIN waitlists w ON b.book_id = w.book_id
+Conditions:
+
+Books published on or before 2015 (b.pyear <= 2015)
+Filtering borrowings with bid greater than or equal to twice the waitlist priority (br.bid >= 2 * COALESCE(w.wid, 0))
+Grouping results by b.book_id
+Result:
+
+Columns: b.book_id, b.title, COUNT(br.bid) AS borrow_count
+Left join with borrowings and waitlists
+Filtered for books published on or before 2015 and borrowings meeting specific conditions
+Grouped by book_id

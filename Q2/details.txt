@@ -1,2 +1,44 @@
 agent: ChatGPT
 Details:
+
+Prompt: Give me the basic structure for a query to get borrowing details for books with authors containing 'John' or 'Marry' in the 'CS' faculty.
+
+Columns:
+- B.bid (Borrowing ID)
+- M.email AS borrower_email (Borrower's Email)
+- B.end_date (End Date of Borrowing)
+
+Tables and Joins:
+- borrowings B
+  - JOIN members M ON B.member = M.email
+  - JOIN books BK ON B.book_id = BK.book_id
+
+Conditions:
+- Borrower's faculty must be 'CS'
+- Book author must contain 'John' or 'Marry' (case-insensitive)
+
+Result:
+- Columns: B.bid, M.email AS borrower_email, B.end_date
+- Filtered for 'CS' faculty and authors containing 'John' or 'Marry'
+
+Prompt:
+I sought clarification from ChatGPT on how to effectively connect values retrieved from one table's columns to another table's columns.
+
+ChatGPT Help:
+In SQL, JOIN clauses can be employed to connect values between tables. The example provided illustrated the usage of JOINs for this purpose.
+
+My Thoughts:
+To implement this insight, I decided to experiment with an INNER JOIN, focusing on connecting the Borrowings and Members tables. 
+I performed this step to ensure the email-based connection worked as expected. With a successful email-based connection, I expanded the JOINs to incorporate the Books table. 
+Subsequently, I refined the WHERE clause to accommodate conditions related to the 'CS' faculty and the authors 'John' or 'Marry'.
+
+Prompt:
+I raised a question regarding the application of the LOWER() function for case-insensitive author comparisons.
+
+ChatGPT Help:
+ChatGPT highlighted the common usage of the LOWER() function in SQL for case-insensitive comparisons, suggesting its application to columns like BK.author.
+
+My Thoughts: 
+Taking ChatGPT's advice, I incorporated the LOWER() function into the query to ensure case-insensitive author comparisons. 
+This step aimed to enhance the query's versatility. After refining the query, I ensured
+it indeed retrieves unique members who borrowed books by specified authors ('John' or 'Marry') from the 'CS' faculty by running it through Github actions.

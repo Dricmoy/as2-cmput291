@@ -1,2 +1,61 @@
-agent: NA
-Details:
+agent: ChatGpt
+Details: 
+
+Prompt: 
+Show me an example of a SQL query to get names and email
+of members from a database
+
+Chatgpt output: 
+SELECT name, email
+FROM members;
+
+Prompt: No, I need to retrieve unique values from the database 
+Chatgpt suggestion was to use the Distinct Keyword
+
+Chatgpt output:
+SELECT DISTINCT name, email
+FROM members;
+
+My thoughts:
+I need to get the names and emails from the members table
+get that unique member from the borrowing table and then
+get match it with waitlists table in the database. 
+
+Prompt: How can I use values retrieved from one table's
+clauses to connect to another table's.
+
+Gpt output:
+ In SQL, you can use the values retrieved from one table's columns to connect to another table's 
+ columns by using JOIN clauses. The JOIN operation allows you to combine rows from two or more tables 
+ based on a related column between them. Here's a general example:
+
+sql
+Copy code
+SELECT columns_you_need
+FROM table1
+JOIN table2 ON table1.column1 = table2.column2;
+
+My thoughts: 
+Find unique members from members table, use join to connect members to borrowings and wailists 
+use booklist to do that
+
+Prompt: looking for unique members who both borrowed and waitlisted a book. 
+Using JOIN to connect members, borrowings, and waitlists based on email and book ID. 
+The SELECT DISTINCT statement ensures unique results, and I can use AND statement links conditions 
+for email and book ID. Show me an example for this for lets say a loans and reservations system
+where I have to connect loans and reservations to a certain borrower
+
+Output:
+sql
+Copy code
+SELECT DISTINCT users.username, users.email
+FROM users
+JOIN loans ON users.email = loans.borrower_email
+JOIN reservations ON users.email = reservations.member_email AND loans.book_id = reservations.book_id;
+
+My thoughts:
+users is the table storing member information.
+loans is the table storing borrowing records.
+reservations is the table storing waitlist records.
+I developed the query by replacing these with the respective keywords and then pushed the changes to view the test case
+in Github Actions.

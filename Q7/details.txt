@@ -1,2 +1,25 @@
-agent: NA
+agent: ChatGPT
 Details:
+
+I asked ChatGPT how to best approach this problem in the context of calculating penalty statistics for members.
+So far I used the same Dashboard for ChatGpt so it has a solid grasp of my a2.db structure.
+
+Prompt:
+Come up with a way to use Count to get the max amount from the borrowings table for a certain given book title
+group by book id title and year. Rank function might be helpful.
+
+ChatGPT Help:
+ChatGPT explained the usage of COUNT() within a GROUP BY context for aggregating results and introduced the 
+application of DENSE_RANK() as a window function. 
+The suggested query involved a JOIN with the 'borrowings' table, 
+ChatGPT suggested I use DENSE_RANK() to create a ranking based on the 
+count of borrowings in descending order. 
+
+Prompt: 
+usage of the WITH clause and how this can be applied to my table to create a subquery
+
+ChatGPT help:
+The common table expression ChatGPT suggested involved a SELECT statement that retrieved information about books, including book_id, title, publication year, 
+count of borrowings, and a ranking based on borrowings count. The DENSE_RANK() window function was employed within the CTE 
+to establish a ranking in descending order. The final query then selected columns from the BookRank CTE where the ranking is less than or equal to 3.
+To do this I used the query where

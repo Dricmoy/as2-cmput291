@@ -1,2 +1,34 @@
-agent: NA
+agent: ChatGPT
 Details:
+Prompt: 
+Help structure a SQL query to retrieve specific borrowing details from the database. 
+obtain Borrowing IDs (B.bid) and borrower emails (M.email) from the 'borrowings' table, joined with the 'members' table. 
+Incorporate a JOIN with the 'waitlists' table, filtering for priority levels greater than or equal to 5
+
+ChatGPT Help:
+Selects Borrowing IDs (B.bid) and borrower emails (M.email) from the 'borrowings' table, joined with the 'members' table.
+Uses a LEFT JOIN with the 'waitlists' table, specifying conditions for the join (B.book_id = W.book_id AND W.priority >= 5).
+
+Prompt:
+I sought clarification from ChatGPT on how to structure a query with a LEFT JOIN, specifically with the conditions applied to the 'waitlists' table.
+
+ChatGPT Help:
+ChatGPT provided insights into the structure of a LEFT JOIN and suggested applying conditions to the 'waitlists' table in the ON clause. 
+This information helped me refine the query to ensure the proper inclusion of relevant waitlist data.
+
+Prompt:
+I inquired about optimizing date calculations in the WHERE clause, particularly the use of the julianday function.
+
+My Thoughts:
+ChatGPT acknowledged the use of julianday for date calculations in SQLite. The suggestion was to apply the function to both the end_date and start_date columns for accurate duration calculations. 
+I incorporated this advice into the query for precise date comparisons.
+After refining the query, I wanted to confirm its functionality, specifically ensuring it retrieves borrowing details 
+for instances where the borrowing duration is more than 14 days, and there is no corresponding entry in the 'waitlists' table with a priority of 5 or higher.
+Developed my Query and pushed it to repo to get error so I asked how to  ensure the borrowtime is greater than 14 days.
+
+Prompt:
+Clarify how to ensure borrowing duration is greater than 14 days and filter for null entries.
+
+ChatGPT Help:
+Ensures the borrowing duration is greater than 14 days (julianday(B.end_date) - julianday(B.start_date) > 14).
+Filters for cases where there is no corresponding entry in the 'waitlists' table (W.wid IS NULL), indicating the absence of a waitlist for the borrowing.

@@ -1,2 +1,28 @@
-agent: NA
+agent: ChatGPT
 Details:
+Prompt:
+Help structure a SQL query for retrieving specific details from the database. 
+The goals I gave to ChatGPT was to obtain information about books, including book_id, title, author, the count of borrowings (borrow_count), 
+and the most recent borrowing start date (most_recent_borrow_date). Include a LEFT JOIN with the 'Borrowings' table, 
+filtering books published after 2001, and grouping the results by book_id.
+
+ChatGPT Help:
+```sql
+SELECT Books.book_id, Books.title, Books.author,
+    AS borrow_count,
+    AS most_recent_borrow_date
+FROM Books
+LEFT JOIN Borrowings ON Books.book_id = Borrowings.book_id
+
+Second Prompt:
+I sought clarification from ChatGPT on the usage of aggregate functions, particularly COUNT and MAX, in combination with a LEFT JOIN and GROUP BY.
+
+ChatGPT Help:
+ChatGPT explained the usage of aggregate functions in SQL, highlighting that COUNT() can be used to count the number of rows, 
+and MAX() can find the maximum value in a column. In this context, they are applied to count borrowings and find the most recent borrowing start date. 
+The LEFT JOIN ensures all books are included, even if they have no borrowings.
+
+My Thoughts:
+I proceeded with the provided query structure, leveraging the insights from ChatGPT regarding the usage of aggregate functions, 
+LEFT JOIN, and GROUP BY to achieve the desired outcome. After refining the query, I aimed to confirm its functionality, 
+specifically ensuring it retrieves information about books, including the count of borrowings and the most recent borrowing start date, for books published after 2001.
